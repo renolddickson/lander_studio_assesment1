@@ -82,7 +82,7 @@ export function TestimonialCard({
       </motion.div>
 
       <motion.div
-        className="absolute left-0 top-0 z-10 h-px w-full overflow-hidden md:h-[2px]"
+        className="absolute left-0 top-0 z-10 h-px w-full overflow-hidden"
         animate={{
           scaleX: isExpanded ? 1 : 0,
           opacity: isExpanded ? 1 : 0,
@@ -107,7 +107,7 @@ export function TestimonialCard({
             {logo}
           </motion.div>
           {/* Mobile indicator */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <motion.svg
               animate={{ rotate: isExpanded ? 180 : 0 }}
               width="20"
@@ -119,7 +119,7 @@ export function TestimonialCard({
             >
               <path d="M5 7.5L10 12.5L15 7.5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </motion.svg>
-          </div>
+          </div> */}
         </div>
 
         {/* Middle: Content */}
@@ -146,7 +146,7 @@ export function TestimonialCard({
         <div className="mt-auto flex items-end justify-between overflow-hidden border-t border-white/8 pt-5">
           <div className="min-w-0">
             <motion.h3
-              className="origin-left font-serif text-[22px] font-normal leading-tight tracking-[-0.04em] text-white whitespace-nowrap md:text-[24px] md:leading-[44px] md:tracking-[-0.05em]"
+              className="origin-left font-serif text-[22px] font-normal leading-tight tracking-[-0.04em] text-[#e6e6e6] whitespace-nowrap md:text-[24px] md:leading-[44px] md:tracking-[-0.05em]"
               animate={{
                 scale: isExpanded ? 0.8 : 1,
                 opacity: isExpanded ? 0.92 : 1,
