@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TestimonialCard } from "./TestimonialCard";
 import { motion } from "framer-motion";
 import { Boxes } from "lucide-react";
@@ -121,13 +121,40 @@ export function TestimonialsSection() {
     testimonials.find((testimonial) => testimonial.isHighlight)?.id ??
     testimonials[0].id;
   const [activeId, setActiveId] = useState<string | null>(featuredId);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      // Target the center of the screen with a narrow horizontal band
+      rootMargin: "-48% 0px -48% 0px",
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      // Only apply this logic on mobile viewports
+      if (window.innerWidth >= 768) return;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("data-testimonial-id");
+          if (id) {
+            setActiveId(id);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    const cards = containerRef.current?.querySelectorAll("[data-testimonial-id]");
+    cards?.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCardInteraction = (id: string) => {
     setActiveId(id);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveId(featuredId);
   };
 
   return (
@@ -175,6 +202,7 @@ export function TestimonialsSection() {
 
         {/* Cards Parent */}
         <motion.div
+          ref={containerRef}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
@@ -192,7 +220,6 @@ export function TestimonialsSection() {
               },
             },
           }}
-          onMouseLeave={handleMouseLeave}
         >
           <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden h-px bg-zinc-800 md:block" />
           {testimonials.map((testimonial) => (

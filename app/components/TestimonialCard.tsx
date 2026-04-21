@@ -16,8 +16,8 @@ interface TestimonialCardProps {
   onHover: () => void;
   onClick: () => void;
 }
-
 export function TestimonialCard({
+  id,
   logo,
   companyName,
   category,
@@ -56,6 +56,7 @@ export function TestimonialCard({
       onMouseEnter={onHover}
       onClick={onClick}
       layout
+      data-testimonial-id={id}
       className={`relative cursor-pointer overflow-hidden border-zinc-800 bg-black 
         border border-white/10 rounded-none bg-zinc-950/90 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur
         md:rounded-none md:border-y md:border-l md:border-zinc-800 first:md:border-l-0
